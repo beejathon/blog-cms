@@ -10,7 +10,7 @@ export const PostCard = ({ post }) => {
       <Card>
         <Card.Header>{post.title}</Card.Header>
         <Card.Body>
-          <Card.Text>
+          <Card.Text as="div">
             <ListGroup variant="flush">
               <ListGroup.Item>
                 <span className="fw-bold">Author: </span>

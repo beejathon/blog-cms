@@ -1,5 +1,6 @@
 import React from "react";
 import Container from "react-bootstrap/esm/Container";
+import Stack from "react-bootstrap/esm/Stack";
 import { usePosts } from "../hooks/usePosts";
 import { PostCard } from "./PostCard";
 
@@ -10,15 +11,17 @@ export const Home = () => {
 
   return (
     <>
-      <Container>
-        All Posts
-        {posts.map((post) => {
-          return (
-            <>
-              <PostCard post={post} />
-            </>
-          )
-        })}    
+      <Container as="main">
+        <Stack gap={4}>
+          <h2 className="h4">All Posts</h2>
+          {posts.map((post) => {
+            return (
+              <div key={post._id}>
+                <PostCard post={post} />
+              </div>
+            )
+          })}
+        </Stack>
       </Container>
     </>
   )

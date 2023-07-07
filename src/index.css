@@ -22,3 +22,15 @@ code {
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
 }
+
+.sign-out-btn {
+  cursor: pointer;
+  padding: 0.75em;
+  margin: 0;
+}
+
+.sign-out-btn:hover {
+  cursor: pointer;
+  background-color: white;
+  color:black;
+}

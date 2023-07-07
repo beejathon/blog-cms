@@ -8,8 +8,8 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState();
 
   useEffect(() => {
-    const localUser = JSON.parse(localStorage.getItem('user'));
-    const localToken = localStorage.getItem('token');
+    const localUser = JSON.parse(localStorage.getItem('cms-user'));
+    const localToken = localStorage.getItem('cms-token');
     let decoded;
     let expiration;
     if (localToken) {
