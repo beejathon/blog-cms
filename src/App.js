@@ -1,10 +1,7 @@
 import React from "react";
 import { PostsProvider } from "./hooks/usePosts";
 import { CommmentsProvider } from "./hooks/useComments";
-import { 
-  Routes, 
-  Route,
-} from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { Header } from "./components/Header";
 import { Home } from "./components/Home";
 import { NewPost } from "./components/NewPost";
@@ -28,7 +25,7 @@ export const App = () => {
             <Route path="/:postid" element={<Post />} />
           </Routes>
         </CommmentsProvider>
-        </PostsProvider>
+      </PostsProvider>
     </div>
   );
 }

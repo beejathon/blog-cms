@@ -17,7 +17,6 @@ export const Header = () => {
     localStorage.removeItem('token');
     setUser(null);
     setToken(null);
-    
   }
 
   return (

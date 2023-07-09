@@ -7,7 +7,7 @@ export const CommmentsProvider = ({ children }) => {
   const [postId, setPostId] = useState(null);
   
   useEffect(() => {
-    const uri = 'https://blog-boyz.up.railway.app/api';
+    const uri = process.env.REACT_APP_API_URI;
     async function fetchComments() {
       try {
         const res = await fetch(`${uri}/posts/${postId}/comments`, {

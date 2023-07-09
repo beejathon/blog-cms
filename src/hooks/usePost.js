@@ -4,7 +4,7 @@ export const usePost = ({ postid }) => {
   const [post, setPost] = useState();
 
   useEffect(() => {
-    const uri = 'https://blog-boyz.up.railway.app/api';
+    const uri = process.env.REACT_APP_API_URI;
     async function fetchData() {
       fetch(`${uri}/posts/${postid}`, {
         method: 'GET',

@@ -5,7 +5,7 @@ import { usePosts } from "../hooks/usePosts";
 import { PostCard } from "./PostCard";
 
 export const Home = () => {
-  const posts = usePosts();
+  const { posts } = usePosts();
 
   if (!posts) return 'Loading...'
 
@@ -16,9 +16,9 @@ export const Home = () => {
           <h2 className="h4">All Posts</h2>
           {posts.map((post) => {
             return (
-              <div key={post._id}>
-                <PostCard post={post} />
-              </div>
+              <>
+                <PostCard key={post._id} post={post} />
+              </>
             )
           })}
         </Stack>

@@ -25,7 +25,7 @@ export const SignIn = () => {
   }
 
   const handleSubmit = async () => {
-    const uri = 'https://blog-boyz.up.railway.app/api';
+    const uri = process.env.REACT_APP_API_URI;
     const data = {
       username: username,
       password: password,
