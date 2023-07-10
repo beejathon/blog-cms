@@ -1,24 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Container from "react-bootstrap/esm/Container";
 import { useAuth } from "../hooks/useAuthProvider";
-import { SignIn } from "./SignIn";
-import { useNavigate } from "react-router-dom";
+import { usePosts } from "../hooks/usePosts";
+import { usePost } from "../hooks/usePost";
+import { useNavigate, useParams } from "react-router-dom";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Stack from "react-bootstrap/esm/Stack";
 import Icon from '@mdi/react';
 import { mdiFileImageOutline } from '@mdi/js';
 import axios from 'axios';
-import { usePosts } from "../hooks/usePosts";
 
-export const NewPost = () => {
-  const { user } = useAuth();
+export const EditPost = () => {
   const { token } = useAuth();
+  const post = usePost(useParams());
+  const { posts } = usePosts();
   const { setPosts } = usePosts();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [file, setFile] = useState();
   const [image, setImage] = useState();
+  const [imageId, setImageId] = useState();
   const navigate = useNavigate();
 
   const onTitleChange = (e) => {
@@ -69,32 +71,38 @@ export const NewPost = () => {
     }
   }
 
-  const handleSubmit = async (e) => {
+  const handleUpdate = async (e) => {
     e.preventDefault(); 
     try {
-      const upload = await uploadFile();
-      if (!upload) {
-        throw new Error('Image upload failed')
-      }
-      const body = {
+      let body = {
         title: title,
         content: content,
-        image: upload.url,
-        imageId: upload.public_id
+        image: image,
+        imageId: imageId
+      } 
+      if (file) {
+        const upload = await uploadFile();
+        if (upload) {
+          body.image = upload.url;
+          body.imageId = upload.public_id;
+        } else {
+          throw new Error('Image upload failed');
+        }
       }
       const config = {
         headers: {
-          'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${token}`,
+          'X-HTTP-Method-Override': 'PUT'
         } 
       }
       const uri = process.env.REACT_APP_API_URI;
       const res = await axios.post(
-        `${uri}/posts/`, 
+        `${uri}/posts/${post._id}`, 
         body,
         config
       )
       if (res.status === 200) {
-        updatePosts(res.data.post)
+        updatePosts(res.data.post_updated)
       } else if (res.status === 401) {
         console.log('You must be logged in to do that!');
       } else {
@@ -103,43 +111,53 @@ export const NewPost = () => {
     } catch (err) {
       console.log(err)
     }
-    setTitle('');
-    setContent('');
-    setFile(null);
-    setImage(null);
-    navigate('/');
   }
 
   const updatePosts = (data) => {
-    console.log(data)
-    setPosts((prev) => {
-      if (prev.length === 0 ) {
-        return [data]
+    const updatedPosts = posts.map((post) => {
+      if (post._id === data._id) {
+        return data;
       } else {
-        const newPosts = [
-          ...prev,
-          data
-        ]
-        return newPosts
+        return post;
       }
     })
+    setPosts(updatedPosts);
+    navigate('/')
   }
 
-  if (!user) return <SignIn />
+  useEffect(() => {
+    if (post) {
+      setTitle(post.title);
+      setContent(post.content);
+      setImage(post.image);
+      setImageId(post.imageId);
+    }
+  }, [post])
+
+  if (!post) return 'Loading...'
 
   return (
     <>
       <Container as="main">
         <Stack gap={3}>
-          <h2 className="h4">New Post</h2>
+          <h2 className="h4">Edit Post</h2>
           <Form>
             <Form.Group className="mb-3" controlId="controlInput1">
               <Form.Label>Title</Form.Label>
-              <Form.Control onChange={(e) => onTitleChange(e)} type="text" />
+              <Form.Control 
+                onChange={(e) => onTitleChange(e)} 
+                type="text" 
+                value={title}
+              />
             </Form.Group>
             <Form.Group className="mb-3" controlId="controlInput2">
               <Form.Label>Content</Form.Label>
-              <Form.Control onChange={(e) => onContentChange(e)} as="textarea" rows={10} />
+              <Form.Control 
+                onChange={(e) => onContentChange(e)} 
+                as="textarea" 
+                rows={10} 
+                value={content}
+              />
             </Form.Group>
             <Form.Group controlId="formFile" className="mb-3">
               <Form.Label>Post Thumbnail</Form.Label>
@@ -156,8 +174,8 @@ export const NewPost = () => {
                 )}
               </Form.Text>
             </Form.Group>
-            <Button variant="primary" onClick={handleSubmit}>
-              Submit
+            <Button variant="primary" onClick={handleUpdate}>
+              Update Post
             </Button>
           </Form>
         </Stack>

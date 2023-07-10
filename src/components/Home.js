@@ -14,7 +14,7 @@ export const Home = () => {
       <Container as="main">
         <Stack gap={4}>
           <h2 className="h4">All Posts</h2>
-          {posts.map((post) => {
+          {posts.slice(0).reverse().map((post) => {
             return (
               <>
                 <PostCard key={post._id} post={post} />

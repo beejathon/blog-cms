@@ -6,7 +6,7 @@ import { Header } from "./components/Header";
 import { Home } from "./components/Home";
 import { NewPost } from "./components/NewPost";
 import { Drafts } from "./components/Drafts";
-import { Post } from "./components/Post";
+import { EditPost } from "./components/EditPost";
 import { SignIn } from "./components/SignIn";
 import { useAuth } from "./hooks/useAuthProvider";
 
@@ -22,7 +22,7 @@ export const App = () => {
             <Route path="/" element={ user ? <Home /> : <SignIn /> } />
             <Route path="/new-post" element={<NewPost />} />
             <Route path="/drafts" element={<Drafts />} />
-            <Route path="/:postid" element={<Post />} />
+            <Route path="/:postid" element={<EditPost />} />
           </Routes>
         </CommmentsProvider>
       </PostsProvider>

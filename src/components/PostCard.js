@@ -32,7 +32,7 @@ export const PostCard = ({ post }) => {
           </Card.Text>
         </Card.Body>
         <Card.Footer>
-          <Link to={`/blog-cms/${post._id}`}>
+          <Link to={`/${post._id}`}>
             <Button>Edit Post</Button>
           </Link>
         </Card.Footer>
