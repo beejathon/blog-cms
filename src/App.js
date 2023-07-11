@@ -9,6 +9,7 @@ import { Drafts } from "./components/Drafts";
 import { EditPost } from "./components/EditPost";
 import { SignIn } from "./components/SignIn";
 import { useAuth } from "./hooks/useAuthProvider";
+import { EditComments } from "./components/EditComments";
 
 export const App = () => {
   const { user } = useAuth();
@@ -23,6 +24,7 @@ export const App = () => {
             <Route path="/new-post" element={<NewPost />} />
             <Route path="/drafts" element={<Drafts />} />
             <Route path="/:postid" element={<EditPost />} />
+            <Route path="/:postid/comments" element={<EditComments />} />
           </Routes>
         </CommmentsProvider>
       </PostsProvider>
