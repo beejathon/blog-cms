@@ -5,6 +5,7 @@ One of two front-ends for a full-stack Blog application. This content management
 Penultimate project in the NodeJS course of the Full Stack JavaScript curriculum @ [The Odin Project](https://www.theodinproject.com/lessons/nodejs-blog-api).
 
 Link to Blog API @ [https://github.com/beejathon/blog-api](https://github.com/beejathon/blog-api)
+
 Link to Blog Client @ [https://github.com/beejathon/portfolio](https://github.com/beejathon/portfolio)
 
 Live demo @ [https://beejathon.github.io/portfolio/#/portfolio/blog](https://beejathon.github.io/portfolio/#/portfolio/blog)
