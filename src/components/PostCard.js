@@ -168,6 +168,7 @@ export const PostCard = ({ post }) => {
         show={modalShow} 
         onCancel={() => setModalShow(false)}
         onConfirm={deletePost}
+        target='post'
       />
     </>
   )
